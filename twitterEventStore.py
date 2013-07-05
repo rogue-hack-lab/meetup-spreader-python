@@ -1,5 +1,6 @@
 """ Store events for tweeting. """
 
+import logging
 import json
 import os
 
@@ -94,6 +95,11 @@ class Store(object):
             ).filter(
                 Event.tweeted == False
             )
+        message = ('Found %s events to tweet today. There are %s '
+            'events in my database %s of which have already been tweeted') % (
+                    query.count(), self.session.query(Event).count(),
+                    self.session.query(Event).filter(Event.tweeted==True).count())
+        logging.info(message)
         return [meetupClient.Event.fromJson(json.loads(event.jsonData)) for event in query.all()]
 
     def processNewEvents(self):

@@ -1,5 +1,6 @@
 """ tweet events. """
 import os
+import logging
 
 import tweepy
 
@@ -20,6 +21,7 @@ class Twitterer(object):
         self.tweet(self.composeTweet(event))
 
     def tweet(self, text):
+        logging.info('attempting to tweet: %s' % text)
         auth = tweepy.OAuthHandler(
                 os.environ['TWITTER_CONSUMER_KEY'],
                 os.environ['TWITTER_CONSUMER_SECRET']

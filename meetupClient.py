@@ -1,6 +1,7 @@
 """ Get rogue hack lab meetup events using the meetup api. """
 
 from datetime import datetime
+import logging
 import os
 import urllib
 
@@ -80,8 +81,14 @@ class Event(object):
 
 def getEvents():
     """ Convenience function for users of this module to get events. """
+    eventsJson = MeetupClient().getEventsJson()
+    logging.debug('meetup response keys: %s' % eventsJson.keys())
+    if 'problem' in eventsJson:
+        message = 'There was a problem getting info from meetup: %s' % eventsJson['problem']
+        logging.debug(message)
+        raise RuntimeError(message)
     return [Event.fromJson(jev) for jev in
-            MeetupClient().getEventsJson()['results']]
+            eventsJson['results']]
 
 if __name__ == '__main__':
     for ev in getEvents():
