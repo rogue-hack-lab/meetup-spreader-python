@@ -47,18 +47,22 @@ some other setup to import it into the wiki.
 
 #### The other setup.
 This consists of two parts:
+
 1. A cron run by root that uses the mediawiki importTextFile script to import
    the generated file into a template page in the wiki.
+
 2. A template page in the wiki that is then used by pages that want to show the
    meetup entries for the week.
 
 The cron entry looks like:
-'''
+
+```
 00 05 * * * php /var/lib/mediawiki/maintenance/importTextFile.php --title "Template:TheTemplatePageName" --conf /etc/mediawiki/LocalSettings.php /path/to/thisWeeksMeetupEntries.txt > /tmp/meetupwikicron.log 2>&1
-'''
+```
 
 And then you use standard mediawiki template syntax to include it in your page,
 i.e.:
-'''
+
+```
 {{TheTemplatePageName}}
-'''
+```
