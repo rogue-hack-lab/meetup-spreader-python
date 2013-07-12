@@ -39,3 +39,6 @@ nosetests.xml
 
 # vim turds
 *.sw[op]
+
+# virtualenv
+meetup-spreader-virtualenv

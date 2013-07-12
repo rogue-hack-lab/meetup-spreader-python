@@ -79,6 +79,9 @@ class Event(object):
             val = self.parseTime(val)
         return val
 
+    def __repr__(self):
+        return '%s %s' % (self.event_url, self.time)
+
 def getEvents():
     """ Convenience function for users of this module to get events. """
     eventsJson = MeetupClient().getEventsJson()

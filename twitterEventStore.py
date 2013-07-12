@@ -95,10 +95,16 @@ class Store(object):
             ).filter(
                 Event.tweeted == False
             )
+        nextEventDate = None
+        nextEvent = self.session.query(Event).filter(Event.time > day).first()
+        if nextEvent is not None:
+            nextEventDate = nextEvent.time
         message = ('Found %s events to tweet today. There are %s '
-            'events in my database %s of which have already been tweeted') % (
+            'events in my database %s of which have already been tweeted. Next'
+            ' event is on %s') % (
                     query.count(), self.session.query(Event).count(),
-                    self.session.query(Event).filter(Event.tweeted==True).count())
+                    self.session.query(Event).filter(Event.tweeted==True).count(),
+                    nextEventDate)
         logging.info(message)
         return [meetupClient.Event.fromJson(json.loads(event.jsonData)) for event in query.all()]
 

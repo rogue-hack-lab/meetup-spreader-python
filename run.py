@@ -11,6 +11,7 @@ def tweetTodaysEvents():
     store.processNewEvents()
     date = datetime.today()
     for ev in store.getEventsOnDay(date):
+        logging.info('tweeting event: %s' % ev)
         twit.tweetEvent(ev)
         store.eventTweeted(ev)
 
@@ -18,7 +19,7 @@ if __name__ == '__main__':
     logging.basicConfig(filename='/var/log/meetupTwitterer.log',
             level=logging.DEBUG,
             format='%(asctime)s %(message)s')
-    logging.info('starting')
+    logging.info('starting ******************************************')
     tweetTodaysEvents()
     logging.info('done')
 
