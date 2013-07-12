@@ -4,6 +4,7 @@ import logging
 
 import twitterer
 import twitterEventStore
+from wiki import generateTemplateTextFile
 
 def tweetTodaysEvents():
     twit = twitterer.Twitterer()
@@ -14,6 +15,8 @@ def tweetTodaysEvents():
         logging.info('tweeting event: %s' % ev)
         twit.tweetEvent(ev)
         store.eventTweeted(ev)
+    generateTemplateTextFile.main()
+
 
 if __name__ == '__main__':
     logging.basicConfig(filename='/var/log/meetupTwitterer.log',

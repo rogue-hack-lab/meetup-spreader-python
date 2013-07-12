@@ -108,6 +108,24 @@ class Store(object):
         logging.info(message)
         return [meetupClient.Event.fromJson(json.loads(event.jsonData)) for event in query.all()]
 
+    def getEventsBetweenDaysInclusive(self, start, end):
+        """ Return any events between the start and end days inclusive. """
+        query = self.session.query(Event
+            ).filter(
+                extract('year', Event.time) >= start.year
+            ).filter(
+                extract('month', Event.time) >= start.month
+            ).filter(
+                extract('day', Event.time) >= start.day
+            ).filter(
+                extract('year', Event.time) <= end.year
+            ).filter(
+                extract('month', Event.time) <= end.month
+            ).filter(
+                extract('day', Event.time) <= end.day
+            )
+        return [meetupClient.Event.fromJson(json.loads(event.jsonData)) for event in query.all()]
+
     def processNewEvents(self):
         """ Get the events from meetup and store them. """
         for ev in meetupClient.getEvents():
