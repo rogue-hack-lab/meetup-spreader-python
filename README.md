@@ -14,7 +14,6 @@ the file.
 
 To run with cron, clone this repository and:
 * change the setup.sh to reflect the environment
-* make secrets.sh available to be sourced by the script
 * make /var/log/meetupTwitterer.py writable by the script
 * add an entry to crontab
 
